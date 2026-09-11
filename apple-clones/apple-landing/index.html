@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apple-Inspired Landing</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', system-ui, sans-serif;
+    color: #1d1d1f;
+    background: #f5f5f7;
+    overflow-x: hidden;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  /* ───── NAV ───── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(29,29,31,.82);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: .5px solid rgba(255,255,255,.08);
+  }
+
+  .nav-inner {
+    width: 100%; max-width: 1024px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 22px;
+  }
+
+  .nav-logo svg { width: 18px; height: 18px; fill: #d1d1d1; }
+  .nav-logo svg:hover { fill: #fff; }
+
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; color: #d1d1d1; letter-spacing: .01em;
+    transition: color .3s;
+  }
+  .nav-links a:hover { color: #fff; }
+
+  .nav-icons { display: flex; gap: 18px; align-items: center; }
+  .nav-icons svg { width: 16px; height: 16px; fill: #d1d1d1; cursor: pointer; transition: fill .3s; }
+  .nav-icons svg:hover { fill: #fff; }
+
+  .nav-hamburger { display: none; cursor: pointer; }
+  .nav-hamburger span { display: block; width: 18px; height: 1.5px; background: #d1d1d1; margin: 4px 0; transition: .3s; }
+
+  /* ───── HERO (LIGHT) ───── */
+  .hero {
+    position: relative;
+    min-height: 580px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    background: #f5f5f7;
+    overflow: hidden;
+    padding: 120px 24px 80px;
+  }
+
+  .hero h1 {
+    font-size: 80px; font-weight: 600; color: #1d1d1f;
+    letter-spacing: -.04em; line-height: 1.05;
+    position: relative; z-index: 1;
+    animation: heroFadeUp 1.2s ease-out;
+  }
+
+  .hero p {
+    font-size: 28px; font-weight: 400; color: #6e6e73;
+    margin-top: 12px; position: relative; z-index: 1;
+    animation: heroFadeUp 1.2s ease-out .15s both;
+  }
+
+  .hero-cta {
+    display: flex; gap: 32px; margin-top: 20px; position: relative; z-index: 1;
+    animation: heroFadeUp 1.2s ease-out .3s both;
+  }
+
+  .hero-cta a {
+    font-size: 21px; color: #0066cc; transition: color .3s;
+  }
+  .hero-cta a:hover { color: #0077ed; }
+  .hero-cta a::after { content: ' \203A'; }
+
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ───── PROMO CARD GRID ───── */
+  .promo-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px;
+  }
+
+  .promo-row {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .promo-row.full { grid-template-columns: 1fr; }
+  .promo-row.half { grid-template-columns: 1fr 1fr; }
+
+  .promo-card {
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 40px 0;
+    text-align: center;
+  }
+
+  .promo-card .card-content { position: relative; z-index: 2; }
+
+  .promo-card h2 {
+    font-size: 44px; font-weight: 600; letter-spacing: -.03em; line-height: 1.07;
+    margin-bottom: 6px;
+  }
+
+  .promo-card .tagline {
+    font-size: 21px; font-weight: 400; letter-spacing: -.01em;
+    margin-bottom: 14px;
+  }
+
+  .promo-card .links { display: flex; gap: 28px; justify-content: center; }
+  .promo-card .links a {
+    font-size: 17px; color: #0066cc; transition: color .3s;
+  }
+  .promo-card .links a:hover { color: #0077ed; }
+  .promo-card .links a::after { content: ' \203A'; }
+
+  .promo-card.dark .links a { color: #2997ff; }
+  .promo-card.dark .links a:hover { color: #6cb6ff; }
+
+  .card-art {
+    margin-top: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+  }
+
+  /* Light card */
+  .promo-card.light { background: #fff; color: #1d1d1f; }
+  .promo-card.light .tagline { color: #6e6e73; }
+
+  /* Dark card */
+  .promo-card.dark { background: #1d1d1f; color: #f5f5f7; }
+  .promo-card.dark .tagline { color: #a1a1a6; }
+
+  /* Full-width hero cards get bigger text */
+  .promo-row.full .promo-card h2 { font-size: 56px; }
+  .promo-row.full .promo-card .tagline { font-size: 28px; }
+  .promo-row.full .promo-card .links a { font-size: 21px; }
+  .promo-row.full .promo-card { min-height: 580px; }
+
+  /* ───── CSS ART: MacBook ───── */
+  .s1-device {
+    width: 360px; height: 230px; border-radius: 16px; position: relative;
+    background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+    box-shadow: 0 0 0 2px #3a3a3c, 0 30px 80px rgba(0,0,0,.35);
+  }
+
+  .s1-device::before {
+    content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 30px;
+    border-radius: 8px;
+    background: linear-gradient(160deg, #0a2a6e 0%, #1a0533 40%, #2d0a4e 100%);
+  }
+
+  .s1-device::after {
+    content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+    width: 50px; height: 6px; border-radius: 3px; background: #3a3a3c;
+  }
+
+  /* ───── CSS ART: iPhone ───── */
+  .s2-phone {
+    width: 170px; height: 340px; border-radius: 38px; position: relative;
+    background: linear-gradient(180deg, #e0e0e5 0%, #c8c8cc 100%);
+    box-shadow: inset 0 0 0 3px #bbb, 0 24px 60px rgba(0,0,0,.12);
+  }
+
+  .s2-phone::before {
+    content: ''; position: absolute; top: 14px; left: 14px; right: 14px; bottom: 14px;
+    border-radius: 26px;
+    background: linear-gradient(180deg, #007aff 0%, #5856d6 50%, #af52de 100%);
+  }
+
+  .s2-phone::after {
+    content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 24px; border-radius: 12px; background: #c8c8cc;
+  }
+
+  /* ───── CSS ART: Watch ───── */
+  .watch-art {
+    margin-top: 32px; display: flex; justify-content: center;
+  }
+
+  .watch-body {
+    width: 120px; height: 150px; border-radius: 30px; position: relative;
+    background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
+    box-shadow: 0 0 0 3px #48484a;
+  }
+
+  .watch-body::before {
+    content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
+    border-radius: 22px;
+    background: linear-gradient(160deg, #ff375f 0%, #ff6b2b 50%, #ffd60a 100%);
+  }
+
+  .watch-body::after {
+    content: ''; position: absolute; top: -24px; left: 50%; transform: translateX(-50%);
+    width: 30px; height: 24px; border-radius: 6px 6px 0 0;
+    background: #48484a;
+  }
+
+  .watch-band-bottom {
+    width: 30px; height: 24px; border-radius: 0 0 6px 6px;
+    background: #48484a; margin: 0 auto;
+  }
+
+  /* ───── CSS ART: Vision Pro ───── */
+  .vision-art { display: flex; justify-content: center; margin-top: 36px; }
+
+  .vision-pro {
+    width: 220px; height: 100px; border-radius: 50px; position: relative;
+    background: linear-gradient(180deg, #e8e8ed 0%, #d2d2d7 100%);
+    box-shadow: 0 12px 40px rgba(0,0,0,.1), inset 0 0 0 2px rgba(255,255,255,.6);
+  }
+
+  .vision-pro::before {
+    content: ''; position: absolute; top: 14px; left: 14px; right: 14px; bottom: 14px;
+    border-radius: 36px;
+    background: linear-gradient(90deg,
+      rgba(60,60,67,.85) 0%,
+      rgba(30,30,35,.92) 20%,
+      rgba(30,30,35,.92) 80%,
+      rgba(60,60,67,.85) 100%
+    );
+    box-shadow: inset 0 0 20px rgba(0,0,0,.3);
+  }
+
+  .vision-pro::after {
+    content: ''; position: absolute; top: 20px; left: 22px; right: 22px; bottom: 20px;
+    border-radius: 30px;
+    background: linear-gradient(90deg,
+      rgba(120,80,200,.3) 0%,
+      rgba(80,120,255,.15) 30%,
+      rgba(80,120,255,.15) 70%,
+      rgba(120,80,200,.3) 100%
+    );
+  }
+
+  .vision-strap-l, .vision-strap-r {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 28px; height: 20px; border-radius: 4px;
+    background: linear-gradient(180deg, #d2d2d7, #c0c0c4);
+  }
+  .vision-strap-l { left: -24px; border-radius: 4px 0 0 4px; }
+  .vision-strap-r { right: -24px; border-radius: 0 4px 4px 0; }
+
+  /* ───── CSS ART: AirPods ───── */
+  .airpods-art { margin-top: 40px; display: flex; justify-content: center; gap: 20px; }
+
+  .airpod { width: 40px; position: relative; }
+
+  .airpod-head {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, #e8e8ed, #fff);
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+
+  .airpod-stem {
+    width: 8px; height: 36px; border-radius: 0 0 4px 4px;
+    background: linear-gradient(180deg, #e8e8ed, #d2d2d7);
+    margin: 0 auto;
+  }
+
+  /* ───── CSS ART: HomePod ───── */
+  .homepod-art { margin-top: 36px; display: flex; justify-content: center; }
+
+  .homepod {
+    width: 120px; height: 140px; border-radius: 50% 50% 46% 46%;
+    background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
+    position: relative; overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,.4);
+  }
+
+  .homepod::before {
+    content: ''; position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+    width: 40px; height: 40px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,.15), transparent 70%);
+    box-shadow: 0 0 20px 8px rgba(120,120,255,.15);
+  }
+
+  .homepod::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,.03) 2px, rgba(255,255,255,.03) 4px);
+  }
+
+  /* ───── CSS ART: iPad ───── */
+  .tablet-art { margin-top: 36px; display: flex; justify-content: center; }
+
+  .tablet {
+    width: 200px; height: 280px; border-radius: 18px; position: relative;
+    background: linear-gradient(180deg, #e8e8ed 0%, #d2d2d7 100%);
+    box-shadow: inset 0 0 0 2px #c8c8cc, 0 20px 60px rgba(0,0,0,.08);
+  }
+
+  .tablet::before {
+    content: ''; position: absolute; top: 16px; left: 16px; right: 16px; bottom: 16px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #34c759 0%, #30d158 30%, #63e6be 100%);
+  }
+
+  .tablet-pencil {
+    position: absolute; top: -8px; right: -18px;
+    width: 8px; height: 260px; border-radius: 4px;
+    background: linear-gradient(180deg, #f5f5f7, #d2d2d7);
+    transform: rotate(6deg);
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  }
+
+  /* ───── CSS ART: AirPods Max ───── */
+  .s4-headphones {
+    width: 180px; height: 180px; position: relative;
+  }
+
+  .s4-headband {
+    width: 140px; height: 70px; border: 6px solid #636366;
+    border-bottom: none; border-radius: 70px 70px 0 0;
+    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  }
+
+  .s4-ear-l, .s4-ear-r {
+    width: 48px; height: 60px; border-radius: 12px;
+    background: linear-gradient(180deg, #48484a, #2c2c2e);
+    position: absolute; top: 68px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.5);
+  }
+  .s4-ear-l { left: 16px; }
+  .s4-ear-r { right: 16px; }
+
+  .s4-ear-l::before, .s4-ear-r::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px; height: 24px; border-radius: 50%;
+    background: radial-gradient(circle, #636366, #48484a);
+  }
+
+  /* ───── CSS ART: Apple TV ───── */
+  .s5-tv {
+    width: 320px; height: 200px; position: relative;
+  }
+
+  .s5-screen {
+    width: 320px; height: 180px; border-radius: 8px;
+    background: linear-gradient(135deg, #1d1d1f 0%, #2c2c2e 100%);
+    position: relative; overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,.12);
+  }
+
+  .s5-screen::before {
+    content: ''; position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 25%, #48dbfb 50%, #ff9ff3 75%, #54a0ff 100%);
+  }
+
+  .s5-stand {
+    width: 80px; height: 16px; margin: 0 auto;
+    background: linear-gradient(180deg, #d2d2d7, #a1a1a6);
+    border-radius: 0 0 8px 8px;
+  }
+
+  /* ───── CSS ART: M4 Chip ───── */
+  .s6-chip {
+    width: 140px; height: 140px; border-radius: 28px; position: relative;
+    background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+    box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 20px 60px rgba(0,0,0,.5);
+  }
+
+  .s6-chip::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px; height: 80px; border-radius: 50%;
+    background: conic-gradient(from 0deg, #ff375f, #ff9f0a, #30d158, #007aff, #bf5af2, #ff375f);
+    opacity: .6;
+    animation: chipSpin 8s linear infinite;
+  }
+
+  .s6-chip::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px; height: 50px; border-radius: 50%;
+    background: #1c1c1e;
+  }
+
+  @keyframes chipSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+  .s6-traces {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .s6-traces::before, .s6-traces::after {
+    content: ''; position: absolute;
+    border: 1px solid rgba(255,255,255,.06); border-radius: 28px;
+  }
+  .s6-traces::before { width: 180px; height: 180px; }
+  .s6-traces::after  { width: 220px; height: 220px; }
+
+  /* ───── ENTERTAINMENT CAROUSEL ───── */
+  .entertainment {
+    background: #000;
+    padding: 60px 0 70px;
+    overflow: hidden;
+  }
+
+  .entertainment-header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding: 0 24px;
+  }
+
+  .entertainment-header h2 {
+    font-size: 48px; font-weight: 600; color: #f5f5f7;
+    letter-spacing: -.03em;
+  }
+
+  .entertainment-header p {
+    font-size: 21px; color: #a1a1a6; margin-top: 8px;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 16px;
+    padding: 0 40px;
+    animation: carouselScroll 30s linear infinite;
+    width: max-content;
+  }
+
+  .carousel-track:hover { animation-play-state: paused; }
+
+  @keyframes carouselScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .ent-card {
+    flex: 0 0 300px;
+    height: 400px;
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .3s ease;
+  }
+
+  .ent-card:hover { transform: scale(1.03); }
+
+  .ent-card-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 28px 24px;
+    background: linear-gradient(transparent, rgba(0,0,0,.7));
+    z-index: 2;
+  }
+
+  .ent-card-badge {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .06em; margin-bottom: 6px; opacity: .8;
+  }
+
+  .ent-card-title {
+    font-size: 22px; font-weight: 600; color: #fff;
+    line-height: 1.2; margin-bottom: 4px;
+  }
+
+  .ent-card-sub {
+    font-size: 14px; color: rgba(255,255,255,.7);
+  }
+
+  /* Card gradient backgrounds */
+  .ent-tvplus { background: linear-gradient(145deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%); }
+  .ent-music { background: linear-gradient(145deg, #fc466b 0%, #3f5efb 100%); }
+  .ent-arcade { background: linear-gradient(145deg, #0b0b3b 0%, #090979 30%, #0abde3 100%); }
+  .ent-fitness { background: linear-gradient(145deg, #1a1a1a 0%, #0d5c2e 40%, #2ed573 100%); }
+  .ent-tvplus-2 { background: linear-gradient(145deg, #2c003e 0%, #12002a 40%, #480078 100%); }
+  .ent-music-2 { background: linear-gradient(145deg, #ff6348 0%, #ff4757 40%, #c44569 100%); }
+  .ent-arcade-2 { background: linear-gradient(145deg, #0c2461 0%, #4834d4 40%, #6c5ce7 100%); }
+  .ent-fitness-2 { background: linear-gradient(145deg, #2d3436 0%, #000 40%, #e17055 100%); }
+
+  /* ───── FADE-IN ───── */
+  .fade-in { opacity: 0; transform: translateY(40px); transition: opacity .9s ease-out, transform .9s ease-out; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ───── FOOTER ───── */
+  footer {
+    background: #f5f5f7; color: #6e6e73;
+    font-size: 12px; line-height: 1.47;
+  }
+
+  .footer-inner {
+    max-width: 980px; margin: 0 auto; padding: 20px 22px 0;
+  }
+
+  .footer-legal-top {
+    padding-bottom: 12px; border-bottom: 1px solid #d2d2d7;
+  }
+
+  .footer-cols {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid #d2d2d7;
+  }
+
+  .footer-col h4 {
+    font-size: 12px; font-weight: 600; color: #1d1d1f; margin-bottom: 8px;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 4px; }
+  .footer-col ul a { color: #424245; transition: color .3s; }
+  .footer-col ul a:hover { color: #1d1d1f; text-decoration: underline; }
+
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0; flex-wrap: wrap; gap: 8px;
+  }
+
+  .footer-bottom-left { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .footer-bottom-right a { color: #424245; margin-left: 16px; transition: color .3s; }
+  .footer-bottom-right a:hover { color: #1d1d1f; }
+
+  /* ───── RESPONSIVE ───── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: block; }
+
+    .hero h1 { font-size: 44px; }
+    .hero p { font-size: 19px; }
+    .hero-cta a { font-size: 17px; }
+
+    .promo-row.half { grid-template-columns: 1fr; }
+    .promo-card { min-height: 440px; padding: 44px 24px 0; }
+    .promo-card h2 { font-size: 36px; }
+    .promo-card .tagline { font-size: 19px; }
+    .promo-card .links a { font-size: 17px; }
+
+    .promo-row.full .promo-card h2 { font-size: 40px; }
+    .promo-row.full .promo-card .tagline { font-size: 21px; }
+    .promo-row.full .promo-card { min-height: 480px; }
+
+    .s1-device { width: 280px; height: 180px; }
+    .s5-tv { width: 260px; height: 170px; }
+    .s5-screen { width: 260px; height: 150px; }
+
+    .entertainment-header h2 { font-size: 36px; }
+    .ent-card { flex: 0 0 260px; height: 350px; }
+
+    .footer-cols { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 34px; }
+    .hero p { font-size: 17px; }
+
+    .promo-card h2 { font-size: 28px; }
+    .promo-card .tagline { font-size: 17px; }
+    .promo-row.full .promo-card h2 { font-size: 32px; }
+
+    .entertainment-header h2 { font-size: 28px; }
+    .ent-card { flex: 0 0 240px; height: 320px; }
+
+    .footer-cols { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" aria-label="Home">
+      <svg viewBox="0 0 17 20" xmlns="http://www.w3.org/2000/svg"><path d="M15.57 10.59c-.02-2.24 1.83-3.32 1.91-3.37-1.04-1.52-2.66-1.73-3.24-1.75-1.38-.14-2.69.81-3.39.81-.7 0-1.78-.79-2.93-.77-1.51.02-2.9.88-3.67 2.23-1.57 2.72-.4 6.74 1.12 8.95.75 1.08 1.63 2.3 2.8 2.25 1.12-.04 1.54-.73 2.9-.73s1.74.73 2.93.71c1.21-.02 1.97-1.1 2.71-2.18.85-1.25 1.2-2.46 1.22-2.52-.03-.01-2.35-.9-2.37-3.58zM13.33 3.55C13.95 2.8 14.37 1.76 14.26.7c-.9.04-1.99.6-2.64 1.35-.58.67-1.08 1.74-.95 2.76 1 .08 2.02-.51 2.66-1.26z"/></svg>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#">Store</a></li>
+      <li><a href="#">Mac</a></li>
+      <li><a href="#">iPad</a></li>
+      <li><a href="#">iPhone</a></li>
+      <li><a href="#">Watch</a></li>
+      <li><a href="#">Vision</a></li>
+      <li><a href="#">AirPods</a></li>
+      <li><a href="#">TV &amp; Home</a></li>
+      <li><a href="#">Entertainment</a></li>
+      <li><a href="#">Accessories</a></li>
+      <li><a href="#">Support</a></li>
+    </ul>
+
+    <div class="nav-icons">
+      <svg viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg" aria-label="Search"><circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="10" y1="10" x2="14" y2="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg viewBox="0 0 14 17" xmlns="http://www.w3.org/2000/svg" aria-label="Bag"><path d="M3 5V4a4 4 0 118 0v1M1 6h12l-.8 10H1.8z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+    </div>
+
+    <div class="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO (light themed) -->
+<section class="hero">
+  <h1>iPhone 16 Pro</h1>
+  <p>Hello, Apple Intelligence.</p>
+  <div class="hero-cta">
+    <a href="#">Learn more</a>
+    <a href="#">Buy</a>
+  </div>
+</section>
+
+<!-- PROMO CARD GRID -->
+<div class="promo-grid">
+
+  <!-- Row 1: Full-width MacBook -->
+  <div class="promo-row full">
+    <div class="promo-card dark fade-in">
+      <div class="card-content">
+        <h2>MacBook Pro</h2>
+        <p class="tagline">Mind-blowing. Head-turning.</p>
+        <div class="links">
+          <a href="#">Learn more</a>
+          <a href="#">Buy</a>
+        </div>
+      </div>
+      <div class="card-art">
+        <div class="s1-device"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: iPhone + iPad -->
+  <div class="promo-row half">
+    <div class="promo-card light fade-in">
+      <div class="card-content">
+        <h2>iPhone 16</h2>
+        <p class="tagline">Brilliant. In every way.</p>
+        <div class="links">
+          <a href="#">Learn more</a>
+          <a href="#">Buy</a>
+        </div>
+      </div>
+      <div class="card-art">
+        <div class="s2-phone"></div>
+      </div>
+    </div>
+    <div class="promo-card light fade-in">
+      <div class="card-content">
+        <h2>iPad Pro</h2>
+        <p class="tagline">Power meets beauty.</p>
+        <div class="links">
+          <a href="#">Learn more</a>
+          <a href="#">Buy</a>
+        </div>
+      </div>
+      <div class="card-art">
+        <div class="tablet-art">
+          <div class="tablet">
+            <div class="tablet-pencil"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: Watch + Vision Pro -->
+  <div class="promo-row half">
+    <div class="promo-card dark fade-in">
+      <div class="card-content">
+        <h2>Apple Watch</h2>
+        <p class="tagline">Time, reimagined.</p>
+        <div class="links">
+          <a href="#">Learn more</a>
+          <a href="#">Buy</a>
+        </div>
+      </div>
+      <div class="card-art">
+        <div class="watch-art">
+          <div>
+            <div class="watch-body"></div>
+            <div class="watch-band-bottom"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="promo-card light fade-in">
+      <div class="card-content">
+        <h2>Apple Vision Pro</h2>
+        <p class="tagline">Welcome to spatial computing.</p>
+        <div class="links">
+          <a href="#">Learn more</a>
+          <a href="#">Buy</a>
+        </div>
+      </div>
+      <div class="card-art">
+        <div class="vision-art">
+          <div class="vision-pro" style="position:relative">
+            <div class="vision-strap-l"></div>
+            <div class="vision-strap-r"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 4: AirPods + HomePod -->
+  <div class="promo-row half">
+    <div class="promo-card light fade-in">
+      <div class="card-content">
+        <h2>AirPods Pro</h2>
+        <p class="tagline">Adaptive Audio. Now playing.</p>
+        <div class="links">
+          <a href="#">Learn more</a>
+          <a href="#">Buy</a>
+        </div>
+      </div>
+      <div class="card-art">
+        <div class="airpods-art">
+          <div class="airpod"><div class="airpod-head"></div><div class="airpod-stem"></div></div>
+          <div class="airpod"><div class="airpod-head"></div><div class="airpod-stem"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="promo-card dark fade-in">
+      <div class="card-content">
+        <h2>HomePod</h2>
+        <p class="tagline">Room-filling. Mind-blowing.</p>
+        <div class="links">
+          <a href="#">Learn more</a>
+          <a href="#">Buy</a>
+        </div>
+      </div>
+      <div class="card-art">
+        <div class="homepod-art">
+          <div class="homepod"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 5: Full-width AirPods Max -->
+  <div class="promo-row full">
+    <div class="promo-card light fade-in">
+      <div class="card-content">
+        <h2>AirPods Max</h2>
+        <p class="tagline">Immerse yourself in sound.</p>
+        <div class="links">
+          <a href="#">Learn more</a>
+          <a href="#">Buy</a>
+        </div>
+      </div>
+      <div class="card-art">
+        <div class="s4-headphones">
+          <div class="s4-headband" style="border-color:#c8c8cc"></div>
+          <div class="s4-ear-l" style="background:linear-gradient(180deg,#d2d2d7,#b0b0b4); box-shadow:0 4px 20px rgba(0,0,0,.12)"></div>
+          <div class="s4-ear-r" style="background:linear-gradient(180deg,#d2d2d7,#b0b0b4); box-shadow:0 4px 20px rgba(0,0,0,.12)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 6: Apple TV + M4 Chip -->
+  <div class="promo-row half">
+    <div class="promo-card light fade-in">
+      <div class="card-content">
+        <h2>Apple TV 4K</h2>
+        <p class="tagline">Cinema. Everywhere.</p>
+        <div class="links">
+          <a href="#">Learn more</a>
+          <a href="#">Buy</a>
+        </div>
+      </div>
+      <div class="card-art">
+        <div class="s5-tv">
+          <div class="s5-screen"></div>
+          <div class="s5-stand"></div>
+        </div>
+      </div>
+    </div>
+    <div class="promo-card dark fade-in" style="background:radial-gradient(ellipse at 50% 80%, #0a1628 0%, #0d0d0d 100%);">
+      <div class="card-content">
+        <h2>M4 Ultra</h2>
+        <p class="tagline">The soul of the machine.</p>
+        <div class="links">
+          <a href="#">Learn more</a>
+          <a href="#">Buy</a>
+        </div>
+      </div>
+      <div class="card-art">
+        <div style="position:relative">
+          <div class="s6-chip"></div>
+          <div class="s6-traces"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ENTERTAINMENT CAROUSEL -->
+<section class="entertainment">
+  <div class="entertainment-header fade-in">
+    <h2>Entertainment</h2>
+    <p>Explore the world of Apple entertainment.</p>
+  </div>
+  <div class="carousel-track">
+    <!-- Set 1 -->
+    <div class="ent-card ent-tvplus">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#b0b0b4;">Apple TV+</div>
+        <div class="ent-card-title">Severance</div>
+        <div class="ent-card-sub">Season 2 now streaming</div>
+      </div>
+    </div>
+    <div class="ent-card ent-music">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#ffe0e6;">Apple Music</div>
+        <div class="ent-card-title">100 million songs</div>
+        <div class="ent-card-sub">Ad-free. Spatial Audio.</div>
+      </div>
+    </div>
+    <div class="ent-card ent-arcade">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#7ec8e3;">Apple Arcade</div>
+        <div class="ent-card-title">200+ incredibly fun games</div>
+        <div class="ent-card-sub">No ads. No in-app purchases.</div>
+      </div>
+    </div>
+    <div class="ent-card ent-fitness">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#7bed9f;">Fitness+</div>
+        <div class="ent-card-title">A new way to get motivated</div>
+        <div class="ent-card-sub">Workouts and meditations</div>
+      </div>
+    </div>
+    <div class="ent-card ent-tvplus-2">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#b0b0b4;">Apple TV+</div>
+        <div class="ent-card-title">The Morning Show</div>
+        <div class="ent-card-sub">Award-winning drama</div>
+      </div>
+    </div>
+    <div class="ent-card ent-music-2">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#ffe0e6;">Apple Music</div>
+        <div class="ent-card-title">Live Radio</div>
+        <div class="ent-card-sub">Three stations, always on</div>
+      </div>
+    </div>
+    <div class="ent-card ent-arcade-2">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#a29bfe;">Apple Arcade</div>
+        <div class="ent-card-title">Play across devices</div>
+        <div class="ent-card-sub">iPhone, iPad, Mac, Apple TV</div>
+      </div>
+    </div>
+    <div class="ent-card ent-fitness-2">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#fab1a0;">Fitness+</div>
+        <div class="ent-card-title">Custom plans</div>
+        <div class="ent-card-sub">Tailored to you</div>
+      </div>
+    </div>
+    <!-- Duplicate set for seamless loop -->
+    <div class="ent-card ent-tvplus">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#b0b0b4;">Apple TV+</div>
+        <div class="ent-card-title">Severance</div>
+        <div class="ent-card-sub">Season 2 now streaming</div>
+      </div>
+    </div>
+    <div class="ent-card ent-music">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#ffe0e6;">Apple Music</div>
+        <div class="ent-card-title">100 million songs</div>
+        <div class="ent-card-sub">Ad-free. Spatial Audio.</div>
+      </div>
+    </div>
+    <div class="ent-card ent-arcade">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#7ec8e3;">Apple Arcade</div>
+        <div class="ent-card-title">200+ incredibly fun games</div>
+        <div class="ent-card-sub">No ads. No in-app purchases.</div>
+      </div>
+    </div>
+    <div class="ent-card ent-fitness">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#7bed9f;">Fitness+</div>
+        <div class="ent-card-title">A new way to get motivated</div>
+        <div class="ent-card-sub">Workouts and meditations</div>
+      </div>
+    </div>
+    <div class="ent-card ent-tvplus-2">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#b0b0b4;">Apple TV+</div>
+        <div class="ent-card-title">The Morning Show</div>
+        <div class="ent-card-sub">Award-winning drama</div>
+      </div>
+    </div>
+    <div class="ent-card ent-music-2">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#ffe0e6;">Apple Music</div>
+        <div class="ent-card-title">Live Radio</div>
+        <div class="ent-card-sub">Three stations, always on</div>
+      </div>
+    </div>
+    <div class="ent-card ent-arcade-2">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#a29bfe;">Apple Arcade</div>
+        <div class="ent-card-title">Play across devices</div>
+        <div class="ent-card-sub">iPhone, iPad, Mac, Apple TV</div>
+      </div>
+    </div>
+    <div class="ent-card ent-fitness-2">
+      <div class="ent-card-content">
+        <div class="ent-card-badge" style="color:#fab1a0;">Fitness+</div>
+        <div class="ent-card-title">Custom plans</div>
+        <div class="ent-card-sub">Tailored to you</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-legal-top">
+      <p>1. Trade-in values will vary based on the condition, year, and configuration of your eligible trade-in device. Not all devices are eligible for credit. You must be at least 18 years old to be eligible to trade in for credit.</p>
+    </div>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Shop and Learn</h4>
+        <ul>
+          <li><a href="#">Store</a></li>
+          <li><a href="#">Mac</a></li>
+          <li><a href="#">iPad</a></li>
+          <li><a href="#">iPhone</a></li>
+          <li><a href="#">Watch</a></li>
+          <li><a href="#">Vision</a></li>
+          <li><a href="#">AirPods</a></li>
+          <li><a href="#">TV &amp; Home</a></li>
+          <li><a href="#">Accessories</a></li>
+          <li><a href="#">Gift Cards</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Entertainment</h4>
+        <ul>
+          <li><a href="#">Apple One</a></li>
+          <li><a href="#">Apple TV+</a></li>
+          <li><a href="#">Apple Music</a></li>
+          <li><a href="#">Apple Arcade</a></li>
+          <li><a href="#">Apple Fitness+</a></li>
+          <li><a href="#">Apple Podcasts</a></li>
+          <li><a href="#">Apple Books</a></li>
+          <li><a href="#">App Store</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>For Business</h4>
+        <ul>
+          <li><a href="#">Apple and Business</a></li>
+          <li><a href="#">Shop for Business</a></li>
+        </ul>
+        <h4 style="margin-top:16px">For Education</h4>
+        <ul>
+          <li><a href="#">Apple and Education</a></li>
+          <li><a href="#">Shop for K-12</a></li>
+          <li><a href="#">Shop for College</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Apple Values</h4>
+        <ul>
+          <li><a href="#">Accessibility</a></li>
+          <li><a href="#">Education</a></li>
+          <li><a href="#">Environment</a></li>
+          <li><a href="#">Inclusion &amp; Diversity</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Racial Equity &amp; Justice</a></li>
+          <li><a href="#">Supply Chain</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>About Apple</h4>
+        <ul>
+          <li><a href="#">Newsroom</a></li>
+          <li><a href="#">Apple Leadership</a></li>
+          <li><a href="#">Career Opportunities</a></li>
+          <li><a href="#">Investors</a></li>
+          <li><a href="#">Ethics &amp; Compliance</a></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Contact Apple</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <span>Copyright &copy; 2025 Apple Inc. All rights reserved.</span>
+        <span style="margin: 0 4px;">|</span>
+        <a href="#" style="color:#424245">Privacy Policy</a>
+        <span style="margin: 0 4px;">|</span>
+        <a href="#" style="color:#424245">Terms of Use</a>
+        <span style="margin: 0 4px;">|</span>
+        <a href="#" style="color:#424245">Sales and Refunds</a>
+        <span style="margin: 0 4px;">|</span>
+        <a href="#" style="color:#424245">Legal</a>
+        <span style="margin: 0 4px;">|</span>
+        <a href="#" style="color:#424245">Site Map</a>
+      </div>
+      <div class="footer-bottom-right">
+        <a href="#">United States</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll-triggered fade-in -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const els = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => observer.observe(el));
+  });
+</script>
+
+</body>
+</html>
