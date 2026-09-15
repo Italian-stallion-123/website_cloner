@@ -51,6 +51,7 @@ temp/
 # Local tooling and machine-specific config
 .codex/
 .firecrawl/
+.mcp.json
 
 # Accidental local dependency copies
 node_modules 2/
