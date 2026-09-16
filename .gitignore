@@ -55,3 +55,7 @@ temp/
 
 # Accidental local dependency copies
 node_modules 2/
+
+# MCP configs — hold literal API keys / are auto-generated. Never commit.
+.cursor/mcp.json
+.codex/config.toml
